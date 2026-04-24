@@ -18,9 +18,19 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'mobile',
+        'address',
+        'birth_date',
+        'image',
+        'gender',
+        'status',
+        'city_id',
+        'actor_type',
+        'actor_id',
     ];
 
     /**
@@ -43,6 +53,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
         ];
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+    public function actorable()
+    {
+        return $this->morphTo(__FUNCTION__, 'actor_type', 'actor_id');
+    }
+
+    public function actor()
+    {
+        return $this->morphTo(__FUNCTION__, 'actor_type', 'actor_id');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }

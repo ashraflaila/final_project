@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | @yield('title')</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,6 +26,7 @@
   <link rel="stylesheet" href="{{ asset ('cms/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset ('cms/plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
   @yield('styles')
 
@@ -165,7 +167,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('cms/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -176,7 +178,7 @@
           <img src="{{ asset('cms/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Ashraf Abu Laila</a>
         </div>
       </div>
 
@@ -221,8 +223,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-
-              <i class="fas fa-user"></i>
+              <i class="fas fa-user-shield"></i>
               <p>
                 Admin
                 <i class="fas fa-angle-left right"></i>
@@ -230,33 +231,93 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
+                <a href="{{ route('admins.index') }}" class="nav-link">
                   <i class="fas fa-list"></i>
                   <p>Index</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
+                <a href="{{ route('admins.create') }}" class="nav-link">
                   <i class="fas fa-plus"></i>
                   <p>Create</p>
                 </a>
               </li>
-
-      </a>
-              </li>
-
-
+              <li class="nav-item">
+                <a href="{{ route('admins.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
               </li>
             </ul>
-
-             <li class="nav-header">Contant mangment</li>
+          </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <p>
+                Teachers
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('teachers.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('teachers.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('teachers.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-user-graduate"></i>
+              <p>
+                Students
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('students.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('students.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('students.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-header">Contant mangment</li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="fas fa-city"></i>
               <p>
-                City
+                Countries
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -269,42 +330,165 @@
               </li>
               <li class="nav-item">
                 <a href="{{ route ('countries.create') }}" class="nav-link">
-                 <i class="fas fa-plus"></i>
+                  <i class="fas fa-plus"></i>
                   <p>Create</p>
                 </a>
               </li>
-
-      </a>
+              <li class="nav-item">
+                <a href="{{ route ('countries.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
               </li>
+            </ul>
+          </li>
 
+           <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>
+                City
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route ('cities.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route ('cities.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route ('cities.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
+          @canany(['view-course', 'create-course', 'edit-course', 'delete-course'])
+          <li class="nav-header">Learning Management</li>
+            <a href="#" class="nav-link">
+              <i class="fas fa-book"></i>
+              <p>
+                Courses
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('view-course')
+              <li class="nav-item">
+                <a href="{{ route('courses.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              @endcan
+              @can('create-course')
+              <li class="nav-item">
+                <a href="{{ route('courses.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              @endcan
+              @can('view-course')
+              <li class="nav-item">
+                <a href="{{ route('courses.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
+              </li>
+              @endcan
+            </ul>
+          </li>
+          @endcanany
+         <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-list-alt"></i>
+              <p>
+                Lessons
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('lessons.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('lessons.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('lessons.trashed') }}" class="nav-link">
+                  <i class="fas fa-trash"></i>
+                  <p>Trashed</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+         <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-tags"></i>
+              <p>
+                Categories
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('categories.index') }}" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('categories.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
               </li>
             </ul>
 
 
-              <li class="nav-header">Setting</li>
+          <li class="nav-header">Setting</li>
 
           <li class="nav-item">
-            <a href="iframe.html" class="nav-link">
+            <a href="{{ route('settings.profile.edit') }}" class="nav-link">
               <i class="far fa-edit"></i>
               <p>Edit Your Profile</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-             <i class="fas fa-key"></i>
+            <a href="{{ route('settings.password.edit') }}" class="nav-link">
+              <i class="fas fa-key"></i>
               <p>Change Password</p>
             </a>
           </li>
-
-            <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="fas fa-sign-out-alt"></i>
-              <p>Logout</p>
-            </a>
-
-
-      <!-- /.sidebar-menu -->
+          <li class="nav-item">
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
+              @csrf
+              <button type="submit" class="nav-link btn btn-link text-left w-100" style="color: inherit; text-decoration: none;">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+              </button>
+            </form>
+          </li>
+        </ul>
+        <!-- /.sidebar-menu -->
+      </nav>
     </div>
     <!-- /.sidebar -->
   </aside>
@@ -333,7 +517,7 @@
 
 </div>
   <footer class="main-footer">
-    <strong>Copyright &copy; {{ now()->year }} - {{ now()->year+1 }} <a href="https://adminlte.io">{{ env('APP_NAME') }}</strong>
+    <strong>Copyright &copy; {{ now()->year }} - {{ now()->year+1 }} <a href="https://adminlte.io">{{ config('app.name', 'Ashraf and Omar') }}</a></strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> {{ env('APP_Version') }}-rc
@@ -380,8 +564,50 @@
 <script src="{{ asset ('cms/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset ('cms/dist/js/demo.js') }}"></script>
-<!-- AdminLTE bdashoard demo (This is only for demo purposes) -->
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset ('cms/dist/js/pages/dashboard.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset ('js/crud.js') }}"></script>
+
+
+<script>
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ session('success') }}",
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ session('error') }}",
+        });
+    @endif
+
+    @if(session('warning'))
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning',
+            text: "{{ session('warning') }}",
+        });
+    @endif
+
+    @if($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ $errors->first() }}",
+        });
+    @endif
+</script>
 
 @yield('scripts')
 </body>
